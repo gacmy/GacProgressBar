@@ -18,8 +18,9 @@ public class MainActivity extends AppCompatActivity {
          progressBar = (GacProgressBar)findViewById(R.id.progress);
          ProgressBarConfig.Builder builder = new ProgressBarConfig.Builder();
          builder.setBackgroudColor(R.color.colorPrimaryDark)
-        .setDescriptionText("剩余30").setForegroundColor(R.color.colorAccent)
-        .setPercent(0.1f).setTextColor(R.color.white).setTextSize(16).setAnimation(true);
+                 .setRoundRect(true)
+        .setForegroundColor(R.color.colorAccent)
+        .setPercent(0.8f).setTextColor(R.color.white).setTextSize(16).setAnimation(true);
          progressBar.setProgressBarConfig(builder.build());
 
     }

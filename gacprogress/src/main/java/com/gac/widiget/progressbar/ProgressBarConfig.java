@@ -12,6 +12,8 @@ public class ProgressBarConfig {
     private int  mForegroundColor;//前景色
     private String mDescriptionText;//文本信息
     private boolean animation;//设置动画效果
+    private boolean roundRect;
+
     private ProgressBarConfig(Builder builder){
         mPercent = builder.mPercent;
         textColor = builder.textColor;
@@ -20,6 +22,11 @@ public class ProgressBarConfig {
         mForegroundColor = builder.mForegroundColor;
         mDescriptionText = builder.mDescriptionText;
         animation = builder.animation;
+        this.roundRect = builder.roundRect;
+    }
+
+    public boolean isRoundRect() {
+        return roundRect;
     }
 
     public boolean isAnimation() {
@@ -60,6 +67,8 @@ public class ProgressBarConfig {
         private int maxHeight;//dp;//暂时没做
         private int maxWidth; //dp 暂时没有需要
         private boolean animation = false;//是否设置动画效果
+
+        private boolean roundRect = false;
         public ProgressBarConfig.Builder setPercent(float percent){
             mPercent = percent;
             return this;
@@ -87,6 +96,10 @@ public class ProgressBarConfig {
 
         public ProgressBarConfig.Builder setDescriptionText(String text){
             mDescriptionText = text;
+            return this;
+        }
+        public ProgressBarConfig.Builder setRoundRect(boolean roundRect){
+            this.roundRect = roundRect;
             return this;
         }
         public ProgressBarConfig build(){

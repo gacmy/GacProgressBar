@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -32,6 +33,7 @@ public class GacProgressBar extends View {
     private String mDescriptionText;
     ValueAnimator animator;
     private int currentWidth;
+    private boolean roundRect;
     public GacProgressBar(Context context) {
         super(context);
         init();
@@ -127,7 +129,7 @@ public class GacProgressBar extends View {
         }else{
             textSize = convertsize(config.getTextSize());
         }
-
+        roundRect = config.isRoundRect();
         //invalidate();
         if(config.isAnimation()){
             setAnimation();
@@ -186,19 +188,41 @@ public class GacProgressBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+       if(!roundRect){
+           drawRectProgress(canvas);
+       }else{
+           drawRoundRectProgress(canvas);
+       }
+    }
+
+    //画矩形进度条
+    private void drawRectProgress(Canvas canvas){
         drawBackground(canvas);
         drawForeground(canvas);
         drawText(canvas);
     }
 
+    //画矩形圆角的进度条 圆角写死了 可以写成变量
+    private void drawRoundRectProgress(Canvas canvas){
+        setBackgroundPaint();
+        RectF rect = new RectF(0,0,maxWidth,maxHeight);
+        canvas.drawRoundRect(rect,15,15,textPaint);
+        setForegroundPaint();
+        RectF rectFore = new RectF(0,0,currentWidth,maxHeight);
+        canvas.drawRoundRect(rectFore,15,15,textPaint);
+        drawText(canvas);
+    }
+    //画背景
     private void drawBackground(Canvas canvas){
         setBackgroundPaint();
         canvas.drawRect(0,0,maxWidth,maxHeight,textPaint);
     }
+    //画前景
     private void  drawForeground(Canvas canvas){
         setForegroundPaint();
         canvas.drawRect(0,0,currentWidth,maxHeight,textPaint);
     }
+    //画文本
     private void drawText(Canvas canvas){
         if(TextUtils.isEmpty(mDescriptionText)){
             return;
